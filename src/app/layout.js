@@ -1,5 +1,6 @@
 import Header from "../components/Header/Header";
 import "./globals.css";
+
 // import { Poppins } from "next/font/google";
 
 // const pooppins = Poppins({ subsets: ["latin"] });

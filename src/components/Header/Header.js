@@ -12,6 +12,16 @@ import {
 import Link from "next/link";
 import logo from "../../../public/logopharmahogar.png";
 import Image from "next/image";
+const links = [
+  {
+    path: "",
+    name: "Inicio",
+  },
+  {
+    path: "/contacto",
+    name: "Contacto",
+  },
+];
 const products = [
   {
     name: "Analytics",
@@ -121,13 +131,17 @@ const Header = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
+          {links.map((link, index) => {
+            return (
+              <Link
+                href={link.path}
+                className={`text-sm font-semibold leading-6 text-gray-900`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
 
-          <Link
-            href="/contacto"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Contacto
-          </Link>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Marketplace
           </a>

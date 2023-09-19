@@ -47,7 +47,10 @@ function classNames(...classes) {
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="bg-white">
+    <header
+      className="bg-white sticky top-0 left-0 right-0 z-[1000]"
+      style={{ boxShadow: "0 1px 6px 0 rgba(0,47,75,.08)" }}
+    >
       <nav
         className="mx-auto flex max-w-5xl items-center justify-between p-4 lg:px-4"
         aria-label="Global"

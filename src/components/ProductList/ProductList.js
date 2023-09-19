@@ -30,39 +30,42 @@ const ProductList = () => {
     visiblePages.push(i);
   }
   return (
-    <div className="bg-white">
+    <div className="bg-[#f5f8ff]">
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-[#009dc6]">
+        <h2 className="text-2xl font-bold tracking-tight  text-gray-700">
+          {/* <h2 className="text-2xl font-bold tracking-tight text-[#009dc6] text-gray-700"> */}
           Medicamentos
         </h2>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 rounded-lg">
           {displayedProducts.map((product) => (
-            <div key={product.id} className="group relative">
-              <div className="flex items-center w-full overflow-hidden rounded-md bg-white hover:bg-[#f5f8ff] lg:h-[200px]">
-                <img
-                  src={product?.images?.[1]?.url}
-                  alt={product.name}
-                  className="h-[150px] object-contain object-center lg:w-full"
-                />
-              </div>
-              <div className="mt-4 flex justify-between">
-                <div className="overflow-hidden">
-                  <h3 className="text-sm text-gray-700">
-                    <a href={product.url}>
-                      {/* <span aria-hidden="true" className="absolute inset-0" /> */}
+            <a href={product.url}>
+              <div
+                key={product.id}
+                className="group relative bg-white hover:bg-[#f5f8ff] ease-in p-6"
+              >
+                <div className="flex items-center justify-center w-full overflow-hidden rounded-md bg-white  lg:h-[200px]">
+                  <img
+                    src={product?.images?.[1]?.url}
+                    alt={product.name}
+                    className="h-[150px] object-contain object-center lg:w-full"
+                  />
+                </div>
+                <div className="mt-4 flex justify-between">
+                  <div className="overflow-hidden">
+                    <h3 className="text-sm text-gray-700 font-bold">
                       {product.name}
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-[12px] overflow-hidden text-gray-400 text-ellipsis w-full whitespace-nowrap">
-                    {product.additionalDescription}
+                    </h3>
+                    <p className="mt-1 text-[12px] overflow-hidden text-gray-400 text-ellipsis w-full whitespace-nowrap">
+                      {product.additionalDescription}
+                    </p>
+                  </div>
+                  <p className="text-sm font-bold text-[#009dc6]">
+                    {product.price.formattedValue}
                   </p>
                 </div>
-                <p className="text-sm font-bold text-[#009dc6]">
-                  {product.price.formattedValue}
-                </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
         {/* Paginador */}

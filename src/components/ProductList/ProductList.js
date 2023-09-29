@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import pro from "../../constans/productos.json";
 const ProductList = () => {
   const productsPerPage = 8;
@@ -29,17 +29,49 @@ const ProductList = () => {
   ) {
     visiblePages.push(i);
   }
+  const [categorias, setCategorias] = useState();
+  const encontrarCategorys = () => {
+    const subcategoriasUnicas = {};
+    pro.products.forEach((producto) => {
+      const gtmProperties = producto.gtmProperties;
+      const subcategoria = gtmProperties.subcategory;
+      const division = gtmProperties.division;
+
+      // Verificamos si la subcategoría ya existe en el objeto
+      if (!subcategoriasUnicas[subcategoria]) {
+        // Si no existe, la inicializamos con un arreglo vacío para almacenar divisiones únicas
+        subcategoriasUnicas[subcategoria] = [];
+      }
+
+      // Agregamos la división al arreglo de divisiones de la subcategoría si no está presente
+      if (division && !subcategoriasUnicas[subcategoria].includes(division)) {
+        subcategoriasUnicas[subcategoria].push(division);
+      }
+    });
+    setCategorias(subcategoriasUnicas);
+  };
+  useEffect(() => {
+    encontrarCategorys();
+  }, []);
+
+  console.log(categorias);
   return (
     <div className="bg-[#f5f8ff]">
-      <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight  text-gray-700">
-          {/* <h2 className="text-2xl font-bold tracking-tight text-[#009dc6] text-gray-700"> */}
+      <div className="mx-auto max-w-5xl py-16 sm:py-24">
+        {/* <h2 className="text-2xl font-bold tracking-tight  text-gray-700"> */}
+        <h2 className="text-2xl font-bold tracking-tight text-[#009dc6]">
           Medicamentos
         </h2>
+        <button
+          className="p-3 rounded-lg bg-gray-600 text-white"
+          onClick={() => subir_categorias()}
+        >
+          Subir categorias
+        </button>
 
         <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 rounded-lg">
-          {displayedProducts.map((product) => (
-            <a href={product.url}>
+          {displayedProducts.map((product, index) => (
+            <a key={index} href={product.url}>
               <div
                 key={product.id}
                 className="group relative bg-white hover:bg-[#f5f8ff] ease-in p-6"

@@ -1,0 +1,51 @@
+type SUBCATEGORIA @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  categoriaID: ID! @index(name: "byCATEGORIA")
+  INVENTARIOS: [INVENTARIO] @hasMany(indexName: "bySUBCATEGORIA", fields: ["id"])
+}
+
+type CATEGORIA @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  SUBCATEGORIAS: [SUBCATEGORIA] @hasMany(indexName: "byCATEGORIA", fields: ["id"])
+}
+
+type INVENTARIO @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombreProducto: String
+  proveedor: String
+  costo: Float!
+  precioVenta: Float!
+  urlImagen: String
+  tipoMaterial: String
+  farmaciaID: ID! @index(name: "byFARMACIA")
+  stock: String
+  subcategoriaID: ID! @index(name: "bySUBCATEGORIA")
+}
+
+type GERENTE @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombres: String!
+  userName: String!
+  email: String
+  phoneNumber: String
+  confirmed: Boolean
+  blocked: Boolean
+  createdBy: String!
+  farmaciaID: ID! @index(name: "byFARMACIA")
+}
+
+type FARMACIA @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombre: String!
+  createdBy: String!
+  INVENTARIOS: [INVENTARIO] @hasMany(indexName: "byFARMACIA", fields: ["id"])
+  GERENTES: [GERENTE] @hasMany(indexName: "byFARMACIA", fields: ["id"])
+  direction: String
+  cp: String
+  rfc: String
+  contactPhone: String
+  codSerial: String
+}
+ 

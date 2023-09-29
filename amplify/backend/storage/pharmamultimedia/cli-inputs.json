@@ -1,0 +1,16 @@
+{
+  "resourceName": "pharmamultimedia",
+  "policyUUID": "e41d9bb1",
+  "bucketName": "pharmaadmind17cdaaa44b744eebe897721cdc34e8f",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

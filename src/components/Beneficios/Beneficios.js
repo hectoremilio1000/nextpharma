@@ -13,9 +13,9 @@ const Beneficios = () => {
           }}
           className="w-full flex items-center justify-center flex-col gap-4 p-6 border-1 border-[#ececec] rounded-lg"
         >
-          <FaBus className="text-[#a2ac00] text-[30px]" />
+          <FaBus className="text-[#0097bd] text-[30px]" />
           <p className="text-sm text-gray-600 font-bold text-center">
-            Envíos <b className="text-[#0097bd]"> GRATIS </b> a todo MEXICO
+            Envíos <b className="text-[#b0ba00]"> GRATIS </b> a todo MEXICO
           </p>
         </div>
         <div
@@ -25,10 +25,10 @@ const Beneficios = () => {
           }}
           className="w-full flex items-center justify-center flex-col gap-4 p-6 border-1 border-[#ececec] rounded-lg"
         >
-          <MdLocalOffer className="text-[#a2ac00] text-[30px]" />
+          <MdLocalOffer className="text-[#0097bd] text-[30px]" />
           <p className="text-sm text-gray-600 font-bold text-center">
             Descubre nuestro folleto de{" "}
-            <b className="text-[#0097bd]"> OFERTAS </b>
+            <b className="text-[#b0ba00]"> OFERTAS </b>
           </p>
         </div>
         <div
@@ -38,9 +38,9 @@ const Beneficios = () => {
           }}
           className="w-full flex items-center justify-center flex-col gap-4 p-6 border-1 border-[#ececec] rounded-lg"
         >
-          <IoIosCard className="text-[#a2ac00] text-[30px]" />
+          <IoIosCard className="text-[#0097bd] text-[30px]" />
           <p className="text-sm text-gray-600 font-bold text-center">
-            Activa membresía <b className="text-[#0097bd]"> HOGAR PHARMA </b>
+            Activa membresía <b className="text-[#b0ba00]"> HOGAR PHARMA </b>
           </p>
         </div>
       </div>

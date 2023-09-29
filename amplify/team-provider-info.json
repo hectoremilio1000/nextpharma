@@ -1,0 +1,31 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pharmaadmin-dev-113227-authRole",
+      "UnauthRoleArn": "arn:aws:iam::648055517850:role/amplify-pharmaadmin-dev-113227-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::648055517850:role/amplify-pharmaadmin-dev-113227-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pharmaadmin-dev-113227-deployment",
+      "UnauthRoleName": "amplify-pharmaadmin-dev-113227-unauthRole",
+      "StackName": "amplify-pharmaadmin-dev-113227",
+      "StackId": "arn:aws:cloudformation:us-east-1:648055517850:stack/amplify-pharmaadmin-dev-113227/d186caa0-429b-11ee-ad68-0a86761dbc71",
+      "AmplifyAppId": "d3jt0cma1lgjv1",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-pharmaadmin-dev-113227-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "function": {
+        "pharmaadmin99c4ae1fPostConfirmation": {
+          "GROUP": "admin",
+          "deploymentBucketName": "amplify-pharmaadmin-dev-113227-deployment",
+          "s3Key": "amplify-builds/pharmaadmin99c4ae1fPostConfirmation-685a5a53482f62706567-build.zip"
+        }
+      },
+      "auth": {
+        "pharmaadmin99c4ae1f": {}
+      },
+      "storage": {
+        "pharmamultimedia": {}
+      }
+    }
+  }
+}

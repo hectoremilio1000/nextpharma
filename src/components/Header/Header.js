@@ -9,6 +9,7 @@ import {
   HiMenuAlt3,
   HiChartPie,
 } from "react-icons/hi";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import Link from "next/link";
 import logo from "../../../public/logopharmahogar.png";
 import Image from "next/image";
@@ -92,9 +93,9 @@ const Header = () => {
             >
               <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
-                  {products.map((item) => (
+                  {products.map((item, index) => (
                     <div
-                      key={item.name}
+                      key={index}
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                     >
                       <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
@@ -117,9 +118,9 @@ const Header = () => {
                   ))}
                 </div>
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {callsToAction.map((item) => (
+                  {callsToAction.map((item, index) => (
                     <a
-                      key={item.name}
+                      key={index}
                       href={item.href}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
                     >
@@ -137,24 +138,34 @@ const Header = () => {
           {links.map((link, index) => {
             return (
               <Link
+                key={index}
                 href={link.path}
-                className={`text-sm font-semibold leading-6 text-gray-900`}
+                className={`text-sm font-semibold leading-6 text-gray-700`}
               >
                 {link.name}
               </Link>
             );
           })}
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="text-sm font-semibold leading-6 text-gray-700">
             Marketplace
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="text-sm font-semibold leading-6 text-gray-700">
             Company
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
+          <a
+            href="#"
+            className="text-sm font-semibold leading-6 flex items-center text-gray-900"
+          >
+            Log in
+            <span
+              className="hover:w-[30px] hover:text-[30px] transition-[0.5] ease-in flex items-center"
+              aria-hidden="true"
+            >
+              <FaLongArrowAltRight />
+            </span>
           </a>
         </div>
       </nav>
@@ -201,9 +212,9 @@ const Header = () => {
                         />
                       </Disclosure.Button>
                       <Disclosure.Panel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
+                        {[...products, ...callsToAction].map((item, index) => (
                           <Disclosure.Button
-                            key={item.name}
+                            key={index}
                             as="a"
                             href={item.href}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"

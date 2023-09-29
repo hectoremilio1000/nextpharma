@@ -4,7 +4,7 @@ import { MdSearch } from "react-icons/md";
 
 import productosList from "../../constans/productos.json";
 const Portada = ({ setShowResponse, setRespuesta }) => {
-  const api = "http://localhost:6000/botapi";
+  const api = "http://localhost:5001/botapi";
   const [loadingResponse, setLoadingResponse] = useState(true);
   const [messageUserNow, setMessageUserNow] = useState("");
   const [messageHistorial, setMessageHistorial] = useState([

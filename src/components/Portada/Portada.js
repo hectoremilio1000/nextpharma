@@ -4,6 +4,7 @@ import { MdSearch } from "react-icons/md";
 
 import productosList from "../../constans/productos.json";
 const Portada = ({ setShowResponse, setRespuesta }) => {
+  const api = "http://localhost:6000/botapi";
   const [loadingResponse, setLoadingResponse] = useState(true);
   const [messageUserNow, setMessageUserNow] = useState("");
   const [messageHistorial, setMessageHistorial] = useState([
@@ -60,7 +61,7 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
     setMessageHistorial((prevHistorial) => [...prevHistorial, newMensaje]);
 
     const messages = { messages: [...messageHistorial, newMensaje] }; // Define el objeto con la propiedad 'messages'
-    const response = await fetch("http://localhost:5000/botapi", {
+    const response = await fetch(api, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -145,7 +146,7 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
     setMessageHistorial((prevHistorial) => [...prevHistorial, newMensaje]);
 
     const messages = { messages: [...messageHistorial, newMensaje] }; // Define el objeto con la propiedad 'messages'
-    const response = await fetch("http://localhost:5000/botapi", {
+    const response = await fetch(api, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +175,7 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
 
       const messages = { messages: [newMensaje] }; // Define el objeto con la propiedad 'messages'
 
-      const response = await fetch("http://localhost:5000/botapi", {
+      const response = await fetch(api, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -53,8 +53,6 @@ const ProductList = () => {
   useEffect(() => {
     encontrarCategorys();
   }, []);
-
-  console.log(categorias);
   return (
     <div className="bg-[#f5f8ff]">
       <div className="mx-auto max-w-5xl py-16 sm:py-24">

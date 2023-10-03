@@ -1,7 +1,11 @@
+"use client";
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import "./globals.css";
 
+import { Amplify } from "aws-amplify";
+import awsExports from "../aws-exports";
+Amplify.configure(awsExports);
 // import { Poppins } from "next/font/google";
 
 // const pooppins = Poppins({ subsets: ["latin"] });

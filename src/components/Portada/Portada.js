@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
 
 import productosList from "../../constans/productos.json";
+import { API, graphqlOperation } from "aws-amplify";
+import { listINVENTARIOS } from "@/graphql/queries";
 const Portada = ({ setShowResponse, setRespuesta }) => {
   const api = "http://localhost:5001/botapi";
   const [loadingResponse, setLoadingResponse] = useState(true);
@@ -19,18 +21,33 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
     // assistant que es lo que responde
   ]);
   const [medicamentos, setMedicamentos] = useState([]);
-
   const [filteredData, setFilteredData] = useState([]);
-  const fetch_medicamentos = () => {
-    const listmedicinas = productosList.products;
-    console.log(listmedicinas);
-    setMedicamentos(listmedicinas);
-    setFilteredData(listmedicinas);
-  };
-  useEffect(() => {
-    fetch_medicamentos();
-  }, []);
+  const [nextToken, setNextToken] = useState(null);
 
+  const fetchMedicamentos = async () => {
+    try {
+      let nextToken = null;
+      do {
+        const result = await API.graphql(
+          graphqlOperation(listINVENTARIOS, {
+            filter: { _deleted: { ne: true } },
+            limit: 1000, // Establece la cantidad de elementos por página según tus necesidades
+            nextToken: nextToken, // Pasa el token de próxima página si está disponible
+          })
+        );
+        const data = result?.data?.listINVENTARIOS?.items || [];
+        setMedicamentos((prevMedicamentos) => [...prevMedicamentos, ...data]);
+        nextToken = result?.data?.listINVENTARIOS?.nextToken;
+      } while (nextToken);
+    } catch (error) {
+      console.error("Error al obtener medicamentos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMedicamentos();
+  }, []); // Agrega nextToken como dependencia para que se ejecute cuando cambie
+  console.log(medicamentos);
   const router = useRouter();
   const redirectToSearch = (categorias) => {
     // Navegar a la página de búsqueda con los parámetros necesarios
@@ -38,11 +55,9 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
   };
   const filtrar_medicinas = (data) => {
     const result = medicamentos.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(data.toLowerCase()) ||
-        item.additionalDescription.toLowerCase().includes(data.toLowerCase())
-      );
+      return item.nombreProducto.toLowerCase().includes(data.toLowerCase());
     });
+    console.log(result);
     setFilteredData(result);
   };
 
@@ -283,34 +298,52 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
                 "0 1px 6px rgba(0,47,75,.08), 0 4px 6px rgba(0,47,75,.1)",
             }}
           >
+            <span className="text-[10px] font-bold">
+              Productos relacionados
+            </span>
             <ul className="w-full list-none max-h-[250px] overflow-auto">
               {filteredData.length > 0 &&
                 filteredData.map((m, index) => {
                   return (
                     <li
-                      onClick={() => setMessageUserNow(m.name)}
+                      onClick={() => setMessageUserNow(m.nombreProducto)}
                       key={index}
                       className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-400 ease-in duration-100 hover:text-white"
                     >
-                      {/* <img
+                      <img
                         className="w-[50px] h-[50px] object-cover"
-                        src={m?.images ? m?.images[1]?.url : ""}
+                        src={m?.urlImagen}
                         alt=""
-                      /> */}
+                      />
                       <div>
                         <p className="text-sm text-inherit">
-                          {m.name + ", " + m.additionalDescription}
+                          {m.nombreProducto + ", "}
                         </p>
-                        <p className="text-sm text-gray-700 font-bold">
+                        {/* <p className="text-sm text-gray-700 font-bold">
                           {"Cateogoria: " +
                             m.gtmProperties.subcategory +
                             ", sub: " +
                             m.gtmProperties.division}
-                        </p>
+                        </p> */}
                       </div>
                     </li>
                   );
                 })}
+              {filteredData.length === 0 ? (
+                <>
+                  <span className="text-[10px] font-bold">
+                    Buscar esta sugerencia
+                  </span>
+                  <li
+                    onClick={() => setMessageUserNow(messageUserNow)}
+                    className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-400 ease-in duration-100 hover:text-white"
+                  >
+                    {messageUserNow}
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
             </ul>
           </div>
         </div>

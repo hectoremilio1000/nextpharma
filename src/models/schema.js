@@ -266,6 +266,15 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "name": "byNombreProducto",
+                        "fields": [
+                            "nombreProducto"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
                         "name": "byFARMACIA",
                         "fields": [
                             "farmaciaID"
@@ -552,6 +561,6 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "codegenVersion": "3.4.2",
+    "codegenVersion": "3.4.4",
     "version": "6b7ecedb83f297465b686c844245e7e9"
 };

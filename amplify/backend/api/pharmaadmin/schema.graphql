@@ -13,7 +13,7 @@ type CATEGORIA @model @auth(rules: [{allow: public}]) {
 
 type INVENTARIO @model @auth(rules: [{allow: public}]) {
   id: ID!
-  nombreProducto: String
+  nombreProducto: String @index(name: "byNombreProducto")
   proveedor: String
   costo: Float!
   precioVenta: Float!

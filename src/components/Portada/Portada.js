@@ -24,28 +24,55 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [nextToken, setNextToken] = useState(null);
 
-  const fetchMedicamentos = async () => {
+  const llenarMensaje = (e) => {
+    const query = e.target.value;
+    setMessageUserNow(query);
+    fetchMedicamentosFiltered(query);
+  };
+  // const fetchMedicamentos = async () => {
+  //   try {
+  //     let nextToken = null;
+  //     do {
+  //       const result = await API.graphql(
+  //         graphqlOperation(listINVENTARIOS, {
+  //           filter: { _deleted: { ne: true } },
+  //           limit: 1000, // Establece la cantidad de elementos por página según tus necesidades
+  //           nextToken: nextToken, // Pasa el token de próxima página si está disponible
+  //         })
+  //       );
+  //       const data = result?.data?.listINVENTARIOS?.items || [];
+  //       setMedicamentos((prevMedicamentos) => [...prevMedicamentos, ...data]);
+  //       nextToken = result?.data?.listINVENTARIOS?.nextToken;
+  //     } while (nextToken);
+  //   } catch (error) {
+  //     console.error("Error al obtener medicamentos:", error);
+  //   }
+  // };
+
+  const fetchMedicamentosFiltered = async (query) => {
+    if (!query || query.length < 3) {
+      setFilteredData([]); // Resetear los datos filtrados si la consulta es muy corta
+      return;
+    }
+
     try {
-      let nextToken = null;
-      do {
-        const result = await API.graphql(
-          graphqlOperation(listINVENTARIOS, {
-            filter: { _deleted: { ne: true } },
-            limit: 1000, // Establece la cantidad de elementos por página según tus necesidades
-            nextToken: nextToken, // Pasa el token de próxima página si está disponible
-          })
-        );
-        const data = result?.data?.listINVENTARIOS?.items || [];
-        setMedicamentos((prevMedicamentos) => [...prevMedicamentos, ...data]);
-        nextToken = result?.data?.listINVENTARIOS?.nextToken;
-      } while (nextToken);
+      const result = await API.graphql(
+        graphqlOperation(listINVENTARIOS, {
+          filter: { nombreProducto: { contains: query } },
+          limit: 50
+        })
+      );
+      const data = result?.data?.listINVENTARIOS?.items || [];
+      setFilteredData(data);
     } catch (error) {
       console.error("Error al obtener medicamentos:", error);
     }
   };
 
+
   useEffect(() => {
-    fetchMedicamentos();
+    // fetchMedicamentos();
+    fetchMedicamentosFiltered();
   }, []); // Agrega nextToken como dependencia para que se ejecute cuando cambie
   console.log(medicamentos);
   const router = useRouter();
@@ -61,11 +88,11 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
     setFilteredData(result);
   };
 
-  const llenarMensaje = (e) => {
-    // console.log(e.target.value);
-    setMessageUserNow(e.target.value);
-    filtrar_medicinas(e.target.value);
-  };
+  // const llenarMensaje = (e) => {
+  //   // console.log(e.target.value);
+  //   setMessageUserNow(e.target.value);
+  //   filtrar_medicinas(e.target.value);
+  // };
   const flujoMedicamento = async (keywords) => {
     const newMensaje = {
       role: "user",

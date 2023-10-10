@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
+import _ from 'lodash';
 
 import productosList from "../../constans/productos.json";
 import { API, graphqlOperation } from "aws-amplify";
@@ -23,11 +24,32 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
   const [medicamentos, setMedicamentos] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [nextToken, setNextToken] = useState(null);
+  const fetchMedicamentosFiltered = async (query) => {
+    if (!query || query.length < 3) {
+      setFilteredData([]); // Resetear los datos filtrados si la consulta es muy corta
+      return;
+    }
+
+    try {
+      const result = await API.graphql(
+        graphqlOperation(listINVENTARIOS, {
+          filter: { nombreProducto: { contains: query } },
+          limit: 50
+        })
+      );
+      const data = result?.data?.listINVENTARIOS?.items || [];
+      setFilteredData(data);
+    } catch (error) {
+      console.error("Error al obtener medicamentos:", error);
+    }
+  };
+  //lodash 
+  const fetchMedicamentosFilteredDebounced = _.debounce(fetchMedicamentosFiltered, 300);
 
   const llenarMensaje = (e) => {
     const query = e.target.value;
     setMessageUserNow(query);
-    fetchMedicamentosFiltered(query);
+    fetchMedicamentosFilteredDebounced(query);
   };
   // const fetchMedicamentos = async () => {
   //   try {
@@ -49,25 +71,7 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
   //   }
   // };
 
-  const fetchMedicamentosFiltered = async (query) => {
-    if (!query || query.length < 3) {
-      setFilteredData([]); // Resetear los datos filtrados si la consulta es muy corta
-      return;
-    }
-
-    try {
-      const result = await API.graphql(
-        graphqlOperation(listINVENTARIOS, {
-          filter: { nombreProducto: { contains: query } },
-          limit: 50
-        })
-      );
-      const data = result?.data?.listINVENTARIOS?.items || [];
-      setFilteredData(data);
-    } catch (error) {
-      console.error("Error al obtener medicamentos:", error);
-    }
-  };
+ 
 
 
   useEffect(() => {
@@ -80,13 +84,13 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
     // Navegar a la página de búsqueda con los parámetros necesarios
     router.push(`/search?categorias=${categorias}`);
   };
-  const filtrar_medicinas = (data) => {
-    const result = medicamentos.filter((item) => {
-      return item.nombreProducto.toLowerCase().includes(data.toLowerCase());
-    });
-    console.log(result);
-    setFilteredData(result);
-  };
+  // const filtrar_medicinas = (data) => {
+  //   const result = medicamentos.filter((item) => {
+  //     return item.nombreProducto.toLowerCase().includes(data.toLowerCase());
+  //   });
+  //   console.log(result);
+  //   setFilteredData(result);
+  // };
 
   // const llenarMensaje = (e) => {
   //   // console.log(e.target.value);

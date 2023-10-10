@@ -22,3 +22,44 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.movies input {
+  font-size: 1.5rem;
+  width: 30rem;
+  padding: 1rem;
+  padding-left: 1.4rem;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 100px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 2rem;
+}
+
+.movie {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.movie img {
+  width: 10rem;
+  height: 10rem;
+  margin-right: 1rem;
+}
+
+.movie__title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgb(228, 101, 51);
+}
+
+.movie__desc {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.movie__info {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  align-items: flex-start;
+  text-align: left;
+}

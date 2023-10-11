@@ -2,9 +2,10 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
 
-import productosList from "../../constans/productos.json";
+import productosList from "../../constans/constantesclasif.json";
 import { API, graphqlOperation } from "aws-amplify";
 import { listINVENTARIOS } from "@/graphql/queries";
+import Link from "next/link";
 const Portada = ({ setShowResponse, setRespuesta }) => {
   const api = "http://localhost:5001/botapi";
   const [loadingResponse, setLoadingResponse] = useState(true);
@@ -244,9 +245,8 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
           }}
         >
           <input
-            spellCheck
             value={messageUserNow}
-            onChange={(e) => llenarMensaje(e)}
+            onChange={llenarMensaje}
             type="text"
             placeholder="Escribe el nombre del producto o tu malestar"
             className="py-5 px-3 rounded-lg bg-white text-gray-500 font-bold w-full focus:outline-none"
@@ -305,28 +305,30 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
               {filteredData.length > 0 &&
                 filteredData.map((m, index) => {
                   return (
-                    <li
-                      onClick={() => setMessageUserNow(m.nombreProducto)}
-                      key={index}
-                      className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-400 ease-in duration-100 hover:text-white"
-                    >
-                      <img
-                        className="w-[50px] h-[50px] object-cover"
-                        src={m?.urlImagen}
-                        alt=""
-                      />
-                      <div>
-                        <p className="text-sm text-inherit">
-                          {m.nombreProducto + ", "}
-                        </p>
-                        {/* <p className="text-sm text-gray-700 font-bold">
+                    <Link href={`/productos/${m.id}`}>
+                      <li
+                        // onClick={() => setMessageUserNow(m.nombreProducto)}
+                        key={index}
+                        className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-400 ease-in duration-100 hover:text-white"
+                      >
+                        <img
+                          className="w-[50px] h-[50px] object-cover"
+                          src={m?.urlImagen}
+                          alt=""
+                        />
+                        <div>
+                          <p className="text-sm text-inherit">
+                            {m.nombreProducto + ", "}
+                          </p>
+                          {/* <p className="text-sm text-gray-700 font-bold">
                           {"Cateogoria: " +
                             m.gtmProperties.subcategory +
                             ", sub: " +
                             m.gtmProperties.division}
                         </p> */}
-                      </div>
-                    </li>
+                        </div>
+                      </li>
+                    </Link>
                   );
                 })}
               {filteredData.length === 0 ? (

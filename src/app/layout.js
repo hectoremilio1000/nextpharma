@@ -5,6 +5,8 @@ import "./globals.css";
 
 import { Amplify } from "aws-amplify";
 import awsExports from "../aws-exports";
+import GlobalContext from "@/contexts/GlobalContext";
+import { useState } from "react";
 Amplify.configure(awsExports);
 // import { Poppins } from "next/font/google";
 
@@ -16,6 +18,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const [globals, setGlobals] = useState({
+    openCartDrawer: false,
+    openSideBar: false,
+    cartItems: [],
+  });
   return (
     <html lang="en">
       <Head>
@@ -24,11 +31,13 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
       </Head>
-      <body>
-        {/* <body className={pooppins.className}> */}
-        <Header />
-        {children}
-      </body>
+      <GlobalContext.Provider value={{ globals, setGlobals }}>
+        <body>
+          {/* <body className={pooppins.className}> */}
+          <Header />
+          {children}
+        </body>
+      </GlobalContext.Provider>
     </html>
   );
 }

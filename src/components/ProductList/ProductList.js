@@ -1,8 +1,59 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import pro from "../../constans/productos.json";
+import GlobalContext from "@/contexts/GlobalContext";
 const ProductList = () => {
-  const productsPerPage = 8;
+  // aument y decrementar carrito
+  const { globals, setGlobals } = useContext(GlobalContext);
+  const isInCart = (id) => {
+    console.log(id);
+    const veri = globals.cartItems.filter((item) => item.id === id).length > 0;
+    console.log(veri);
+    return veri;
+  };
+  const addItemToCart = (product) => {
+    product.quantity = 1;
+    const newProducto = {
+      id: product.code,
+      description: product?.additionalDescription,
+      quantity: 1,
+      title: product?.name,
+      image: product?.images?.[1]?.url,
+      price: product.price.value,
+      total: product.price.value,
+    };
+    console.log(newProducto);
+    setGlobals({ ...globals, cartItems: [...globals.cartItems, newProducto] });
+  };
+  const incrementItemInCart = (id) => {
+    setGlobals({
+      ...globals,
+      cartItems: globals.cartItems.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    });
+  };
+  const decrementItemInCart = (id) => {
+    //if quantity is 1 remove item from cart
+    if (globals.cartItems.find((item) => item.id === id).quantity === 1) {
+      removeItemFromCart(id);
+      return;
+    }
+    setGlobals({
+      ...globals,
+      cartItems: globals.cartItems.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      ),
+    });
+  };
+  const removeItemFromCart = (id) => {
+    setGlobals({
+      ...globals,
+      cartItems: globals.cartItems.filter((item) => item.id !== id),
+    });
+  };
+  // ------------------------------
+  const productsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calcular el índice de inicio y final para los productos de la página actual
@@ -54,42 +105,126 @@ const ProductList = () => {
     encontrarCategorys();
   }, []);
   return (
-    <div className="bg-[#f5f8ff]">
+    <div className="bg-[#fff]">
       <div className="mx-auto max-w-5xl py-16 sm:py-24">
         {/* <h2 className="text-2xl font-bold tracking-tight  text-gray-700"> */}
-        <h2 className="text-2xl font-bold tracking-tight text-[#009dc6]">
-          Medicamentos
+        <h2 className="text-2xl text-center font-bold tracking-tight text-[#009dc6]">
+          Mejores Ofertas
         </h2>
 
         <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 rounded-lg">
           {displayedProducts.map((product, index) => (
-            <a key={index} href={product.url}>
-              <div
-                key={product.id}
-                className="group relative bg-white hover:bg-[#f5f8ff] ease-in p-6"
-              >
-                <div className="flex items-center justify-center w-full overflow-hidden rounded-md bg-white  lg:h-[200px]">
-                  <img
-                    src={product?.images?.[1]?.url}
-                    alt={product.name}
-                    className="h-[150px] object-contain object-center lg:w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div className="overflow-hidden">
-                    <h3 className="text-sm text-gray-700 font-bold">
-                      {product.name}
-                    </h3>
-                    <p className="mt-1 text-[12px] overflow-hidden text-gray-400 text-ellipsis w-full whitespace-nowrap">
-                      {product.additionalDescription}
+            <div key={index}>
+              <a href={product.url}>
+                <div
+                  key={product.id}
+                  className="group relative bg-white hover:bg-[#f5f8ff] ease-in p-6"
+                >
+                  <div className="flex items-center justify-center w-full overflow-hidden rounded-md bg-white  lg:h-[200px]">
+                    <img
+                      src={product?.images?.[1]?.url}
+                      alt={product.name}
+                      className="h-[150px] object-contain object-center lg:w-full"
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div className="overflow-hidden">
+                      <h3 className="text-sm text-gray-700 font-bold">
+                        {product.name}
+                      </h3>
+                      <p className="mt-1 text-[12px] overflow-hidden text-gray-400 text-ellipsis w-full whitespace-nowrap">
+                        {product.additionalDescription}
+                      </p>
+                    </div>
+                    <p className="text-sm font-bold text-[#009dc6]">
+                      {product.price.formattedValue}
                     </p>
                   </div>
-                  <p className="text-sm font-bold text-[#009dc6]">
-                    {product.price.formattedValue}
-                  </p>
                 </div>
-              </div>
-            </a>
+              </a>
+              <form className="w-full">
+                {!isInCart(product.code) ? (
+                  <button
+                    type="button"
+                    className="rounded bg-[#9ca500] w-full  py-3 px-3 flex items-center duration-100 justify-between hover:bg-[#818706]  text-white"
+                    onClick={() => addItemToCart(product)}
+                  >
+                    <span></span>
+                    <span className="text-sm">Agregar al carrito</span>
+                    <div className="">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                ) : (
+                  <div className="block w-full bg-gray-600 rounded border px-4 py-2 text-sm font-medium transition hover:scale-105">
+                    <div className="flex items-center justify-between">
+                      <button
+                        type="button"
+                        className="text-white rounded-full w-7 h-7 flex items-center justify-center"
+                        onClick={() => decrementItemInCart(product.code)}
+                      >
+                        <span className="sr-only">Decrement</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="h-4 w-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M20 12H4"
+                          />
+                        </svg>
+                      </button>
+                      <span className="text-white text-md">
+                        {
+                          globals.cartItems.find(
+                            (item) => item.id === product.code
+                          ).quantity
+                        }
+                      </span>
+                      <button
+                        type="button"
+                        className="text-white rounded-full w-8 h-8 flex items-center justify-center"
+                        onClick={() => incrementItemInCart(product.code)}
+                      >
+                        <span className="sr-only">Increment</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4.5v15m7.5-7.5h-15"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </form>
+            </div>
           ))}
         </div>
         {/* Paginador */}

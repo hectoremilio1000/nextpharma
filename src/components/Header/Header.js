@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, React, useState } from "react";
+import { Fragment, React, useContext, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   HiChevronDown,
@@ -13,6 +13,9 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import Link from "next/link";
 import logo from "../../../public/logopharmahogar.png";
 import Image from "next/image";
+import SideBar from "../SideBar";
+import CartDrawer from "../CartDrawer";
+import GlobalContext from "@/contexts/GlobalContext";
 const links = [
   {
     path: "",
@@ -46,218 +49,148 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Header = () => {
+  const { globals, setGlobals } = useContext(GlobalContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header
-      className="bg-white sticky top-0 left-0 right-0 z-[1000]"
-      style={{ boxShadow: "0 1px 6px 0 rgba(0,47,75,.08)" }}
-    >
-      <nav
-        className="mx-auto flex max-w-5xl items-center justify-between p-4 lg:px-4"
-        aria-label="Global"
+    <>
+      <SideBar />
+      <header
+        aria-label="Site Header"
+        className="fixed z-20 top-0 left-0 right-0 border-b border-gray-100 bg-white shadow-md"
       >
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <Image className="h-12 w-auto" src={logo} alt="logo pharmahogar" />
-          </Link>
-        </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <HiMenuAlt3 className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
-              <HiChevronDown
-                className="h-5 w-5 flex-none text-gray-400"
-                aria-hidden="true"
-              />
-            </Popover.Button>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
-                  {products.map((item, index) => (
-                    <div
-                      key={index}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                    >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="flex-auto">
-                        <a
-                          href={item.href}
-                          className="block font-semibold text-gray-900"
-                        >
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {callsToAction.map((item, index) => (
-                    <a
-                      key={index}
-                      href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                    >
-                      <item.icon
-                        className="h-5 w-5 flex-none text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </Popover.Panel>
-            </Transition>
-          </Popover>
-          {links.map((link, index) => {
-            return (
-              <Link
-                key={index}
-                href={link.path}
-                className={`text-sm font-semibold leading-6 text-gray-700`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-700">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-700">
-            Company
-          </a>
-        </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="#"
-            className="text-sm font-semibold leading-6 flex items-center text-gray-900"
-          >
-            Log in
-            <span
-              className="hover:w-[30px] hover:text-[30px] transition-[0.5] ease-in flex items-center"
-              aria-hidden="true"
-            >
-              <FaLongArrowAltRight />
-            </span>
-          </a>
-        </div>
-      </nav>
-      <Dialog
-        as="div"
-        className="lg:hidden"
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-      >
-        <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </a>
+        <div className="mx-auto flex h-16 max-w-5xl items-center justify-end sm:px-6 lg:px-8">
+          <div className="flex items-center gap-4">
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 lg:hidden"
+              onClick={() => {
+                setGlobals({
+                  ...globals,
+                  openSideBar: true,
+                  openCartDrawer: false,
+                });
+              }}
             >
-              <span className="sr-only">Close menu</span>
-              <HiChevronDown className="h-6 w-6" aria-hidden="true" />
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
             </button>
+            <Link href="/" className="p-1.5 flex">
+              <span className="sr-only">Your Company</span>
+              <Image
+                className="h-10 w-auto"
+                src={logo}
+                alt="logo pharmahogar"
+              />
+            </Link>
           </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
-                  {({ open }) => (
-                    <>
-                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        Product
-                        <HiChevronDown
-                          className={classNames(
-                            open ? "rotate-180" : "",
-                            "h-5 w-5 flex-none"
-                          )}
-                          aria-hidden="true"
+
+          <div className="flex flex-1 items-center justify-between gap-8">
+            <nav
+              aria-label="Site Nav"
+              className="hidden lg:justify-center w-full lg:flex lg:gap-4 lg:text-xs lg:font-bold lg:uppercase lg:tracking-wide lg:text-gray-500"
+            >
+              <a
+                href="/about"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+              >
+                About
+              </a>
+
+              <a
+                href="/news"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+              >
+                News
+              </a>
+              <Link
+                href="/products"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+              >
+                Products
+              </Link>
+              <a
+                href="/contact"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+              >
+                Contact
+              </a>
+            </nav>
+
+            <div className="flex items-center">
+              <div className="flex items-center border-x border-gray-100">
+                <span className="border-e border-e-gray-100">
+                  <a
+                    onClick={() =>
+                      setGlobals({ ...globals, openCartDrawer: true })
+                    }
+                    href={() => false}
+                    className="relative hover:cursor-pointer grid h-16 w-16 place-content-center border-b-4 border-transparent hover:border-gray-700"
+                  >
+                    <div>
+                      <svg
+                        className="relative h-5 w-5 text-[#0097bd]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                         />
-                      </Disclosure.Button>
-                      <Disclosure.Panel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item, index) => (
-                          <Disclosure.Button
-                            key={index}
-                            as="a"
-                            href={item.href}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                          >
-                            {item.name}
-                          </Disclosure.Button>
-                        ))}
-                      </Disclosure.Panel>
-                    </>
-                  )}
-                </Disclosure>
-                <Link
-                  href="/contacto"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Contacto
-                </Link>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
+                      </svg>
+                      <span className="p-1 bg-[#b0ba00] text-white rounded-full h-6 w-6 text-center text-xs leading-4 absolute top-3 right-1">
+                        {globals.cartItems.length}
+                      </span>
+                    </div>
+                    <span className="sr-only">Cart</span>
+                  </a>
+                </span>
+
+                <span className="border-e border-e-gray-100">
+                  <a
+                    href="/account"
+                    className="grid h-16 w-16 place-content-center border-b-4 border-transparent hover:border-gray-700"
+                  >
+                    <svg
+                      className="h-5 w-5 text-[#0097bd]"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+
+                    <span className="sr-only"> Account </span>
+                  </a>
+                </span>
               </div>
             </div>
           </div>
-        </Dialog.Panel>
-      </Dialog>
-    </header>
+        </div>
+        <CartDrawer />
+      </header>
+    </>
   );
 };
 

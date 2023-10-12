@@ -227,7 +227,7 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
   };
 
   return (
-    <div className="py-[80px] bg-[#f5f8ff] flex flex-wrap md:flex-nowrap items-center gap-4 justify-between w-full px-4 ">
+    <div className="py-[80px] min-h-[100vh] bg-[#f5f8ff] flex flex-wrap md:flex-nowrap items-center gap-4 justify-between w-full px-4 ">
       <div className="w-full max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold mb-4 text-[#0097bd] text-center max-w-[600px] mx-auto">
           La farmacia digital de México

@@ -99,32 +99,32 @@ const Header = () => {
           <div className="flex flex-1 items-center justify-between gap-8">
             <nav
               aria-label="Site Nav"
-              className="hidden lg:justify-center w-full lg:flex lg:gap-4 lg:text-xs lg:font-bold lg:uppercase lg:tracking-wide lg:text-gray-500"
+              className="hidden lg:justify-center w-full lg:flex lg:gap-4 lg:text-sm lg:font-medium  lg:tracking-wide lg:text-gray-700"
             >
               <a
                 href="/about"
-                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-[#0097bd]"
               >
-                About
+                Sobre Nosotros
               </a>
 
               <a
                 href="/news"
-                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-[#0097bd]"
               >
-                News
+                Ofertas y Promociones
               </a>
               <Link
                 href="/products"
-                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-[#0097bd]"
               >
-                Products
+                Productos
               </Link>
               <a
                 href="/contact"
-                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-gray-700"
+                className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-[#0097bd]"
               >
-                Contact
+                Contacto
               </a>
             </nav>
 

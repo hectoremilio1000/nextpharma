@@ -128,7 +128,10 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
       >
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div
+          style={{ backdropFilter: "blur(6px)" }}
+          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        ></div>
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
@@ -138,10 +141,10 @@ export default function CartDrawer() {
                   <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                     <div className="flex items-start justify-between">
                       <h2
-                        className="text-lg font-medium text-gray-900"
+                        className="text-xl font-bold text-gray-700"
                         id="slide-over-title"
                       >
-                        Carrito de Compras
+                        Mi carrito
                       </h2>
                       <div className="ml-3 flex h-7 items-center">
                         <button
@@ -182,7 +185,7 @@ export default function CartDrawer() {
                     </div>
                   </div>
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                    <div className="flex justify-between text-base font-medium text-gray-900">
+                    <div className="flex justify-between text-base font-bold text-gray-700">
                       <p>Subtotal</p>
                       <p>${calculateSubtotal()?.toFixed(2)}</p>
                     </div>

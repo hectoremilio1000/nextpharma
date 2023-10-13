@@ -106,13 +106,13 @@ const ProductList = () => {
   }, []);
   return (
     <div className="bg-[#fff]">
-      <div className="mx-auto max-w-5xl py-16 sm:py-24">
+      <div className="mx-auto max-w-5xl lg:py-12 py-24">
         {/* <h2 className="text-2xl font-bold tracking-tight  text-gray-700"> */}
-        <h2 className="text-2xl text-center font-bold tracking-tight text-[#009dc6]">
+        <h2 className="text-2xl text-start font-bold tracking-tight text-[#009dc6]">
           Mejores Ofertas
         </h2>
 
-        <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 rounded-lg">
+        <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 rounded-lg">
           {displayedProducts.map((product, index) => (
             <div key={index}>
               <a href={product.url}>
@@ -146,7 +146,7 @@ const ProductList = () => {
                 {!isInCart(product.code) ? (
                   <button
                     type="button"
-                    className="rounded bg-[#9ca500] w-full  py-3 px-3 flex items-center duration-100 justify-between hover:bg-[#818706]  text-white"
+                    className="bg-[#9ca500] w-full  py-3 px-3 flex items-center duration-100 justify-between hover:bg-[#818706]  text-white"
                     onClick={() => addItemToCart(product)}
                   >
                     <span></span>
@@ -169,7 +169,7 @@ const ProductList = () => {
                     </div>
                   </button>
                 ) : (
-                  <div className="block w-full bg-gray-600 rounded border px-4 py-2 text-sm font-medium transition hover:scale-105">
+                  <div className="block w-full bg-gray-600 border px-4 py-2 text-sm font-medium transition hover:scale-105">
                     <div className="flex items-center justify-between">
                       <button
                         type="button"

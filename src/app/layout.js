@@ -7,6 +7,7 @@ import { Amplify } from "aws-amplify";
 import awsExports from "../aws-exports";
 import GlobalContext from "@/contexts/GlobalContext";
 import { useState } from "react";
+import Footer from "@/components/Footer/Footer";
 Amplify.configure(awsExports);
 // import { Poppins } from "next/font/google";
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
           {/* <body className={pooppins.className}> */}
           <Header />
           {children}
+          <Footer />
         </body>
       </GlobalContext.Provider>
     </html>

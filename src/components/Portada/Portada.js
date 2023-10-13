@@ -227,9 +227,9 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
   };
 
   return (
-    <div className="py-[80px] min-h-[100vh] bg-[#f5f8ff] flex flex-wrap md:flex-nowrap items-center gap-4 justify-between w-full px-4 ">
+    <div className="py-[80px] min-h-[100vh] bg-[#e1f9ff] flex flex-wrap md:flex-nowrap items-center gap-4 justify-between w-full px-4 ">
       <div className="w-full max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-[#0097bd] text-center max-w-[600px] mx-auto">
+        <h1 className="text-3xl font-bold mb-4 text-[#0097bd] text-center max-w-[600px] mx-auto">
           La farmacia digital de México
         </h1>
         <p className="text-sm text-center leading-6 text-gray-500 max-w-[600px] mx-auto">
@@ -256,6 +256,7 @@ const Portada = ({ setShowResponse, setRespuesta }) => {
               <div>
                 <div className="relative right-[12px]">
                   <button
+                    style={{ boxShadow: "0 4px 16px -8px #b0ba00" }}
                     onClick={() => enviarMensajes()}
                     className="cursor-pointer p-3 rounded-lg bg-[#b0ba00] flex items-center justify-center"
                   >

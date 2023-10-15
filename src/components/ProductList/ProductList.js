@@ -6,9 +6,9 @@ const ProductList = () => {
   // aument y decrementar carrito
   const { globals, setGlobals } = useContext(GlobalContext);
   const isInCart = (id) => {
-    console.log(id);
+    // console.log(id);
     const veri = globals.cartItems.filter((item) => item.id === id).length > 0;
-    console.log(veri);
+    // console.log(veri);
     return veri;
   };
   const addItemToCart = (product) => {
@@ -22,7 +22,7 @@ const ProductList = () => {
       price: product.price.value,
       total: product.price.value,
     };
-    console.log(newProducto);
+    // console.log(newProducto);
     setGlobals({ ...globals, cartItems: [...globals.cartItems, newProducto] });
   };
   const incrementItemInCart = (id) => {
@@ -105,21 +105,21 @@ const ProductList = () => {
     encontrarCategorys();
   }, []);
   return (
-    <div className="bg-[#fff]">
+    <div>
       <div className="mx-auto max-w-5xl lg:py-12 py-24">
         {/* <h2 className="text-2xl font-bold tracking-tight  text-gray-700"> */}
-        <h2 className="text-2xl text-start font-bold tracking-tight text-[#009dc6]">
+        <h2 className="text-xl text-start font-bold tracking-tight text-[#2f3a51]">
           Mejores Ofertas
         </h2>
 
         <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4 rounded-lg">
           {displayedProducts.map((product, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              className="bg-white hover:bg-[#f5f8ff] ease-in p-3 rounded-sm overflow-hidden"
+            >
               <a href={product.url}>
-                <div
-                  key={product.id}
-                  className="group relative bg-white hover:bg-[#f5f8ff] ease-in p-6"
-                >
+                <div key={product.id} className="group relative p-6">
                   <div className="flex items-center justify-center w-full overflow-hidden rounded-md bg-white  lg:h-[200px]">
                     <img
                       src={product?.images?.[1]?.url}
@@ -146,7 +146,7 @@ const ProductList = () => {
                 {!isInCart(product.code) ? (
                   <button
                     type="button"
-                    className="bg-[#9ca500] w-full  py-3 px-3 flex items-center duration-100 justify-between hover:bg-[#818706]  text-white"
+                    className="bg-[#00a4cb] w-full rounded-full py-3 px-3 flex items-center duration-100 justify-between hover:bg-[#077996]  text-white"
                     onClick={() => addItemToCart(product)}
                   >
                     <span></span>
@@ -169,11 +169,11 @@ const ProductList = () => {
                     </div>
                   </button>
                 ) : (
-                  <div className="block w-full bg-gray-600 border px-4 py-2 text-sm font-medium transition hover:scale-105">
+                  <div className="block w-full px-4 py-2 text-sm font-medium transition hover:scale-105">
                     <div className="flex items-center justify-between">
                       <button
                         type="button"
-                        className="text-white rounded-full w-7 h-7 flex items-center justify-center"
+                        className="text-gray-500 border border-current rounded-full w-7 h-7 flex items-center justify-center"
                         onClick={() => decrementItemInCart(product.code)}
                       >
                         <span className="sr-only">Decrement</span>
@@ -192,7 +192,7 @@ const ProductList = () => {
                           />
                         </svg>
                       </button>
-                      <span className="text-white text-md">
+                      <span className="text-gray-500 text-md">
                         {
                           globals.cartItems.find(
                             (item) => item.id === product.code
@@ -201,7 +201,7 @@ const ProductList = () => {
                       </span>
                       <button
                         type="button"
-                        className="text-white rounded-full w-8 h-8 flex items-center justify-center"
+                        className="text-gray-500 border border-current rounded-full w-8 h-8 flex items-center justify-center"
                         onClick={() => incrementItemInCart(product.code)}
                       >
                         <span className="sr-only">Increment</span>

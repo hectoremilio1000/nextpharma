@@ -7,7 +7,7 @@ export default function CartDrawer() {
   let { openCartDrawer } = globals;
   const calculateSubtotal = () => {
     return globals.cartItems.reduce((total, item) => {
-      console.log(item);
+      // console.log(item);
       return total + item.price * item.quantity;
     }, 0);
   };
@@ -99,7 +99,7 @@ export default function CartDrawer() {
       id="drawer-right-example"
       className={`${
         openCartDrawer ? "" : "translate-x-full"
-      } fixed top-0 right-0 z-40 h-screen p-3 overflow-y-auto transition-transform  bg-white w-full sm:w-96 dark:bg-gray-800`}
+      } fixed top-0 right-0 z-40 h-screen p-3 overflow-y-auto duration-300 transition-transform  bg-white w-full sm:w-96 dark:bg-gray-800`}
       aria-labelledby="drawer-right-label"
     >
       <button
@@ -128,10 +128,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
       >
-        <div
-          style={{ backdropFilter: "blur(6px)" }}
-          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        ></div>
+        {/* <div className="fixed inset-0 bg-gray-700 bg-opacity-75 duration-300 transition-opacity"></div> */}
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
